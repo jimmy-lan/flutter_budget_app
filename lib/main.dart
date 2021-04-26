@@ -41,7 +41,23 @@ class MyHomePage extends StatelessWidget {
             elevation: 5,
           ),
           Column(
-            children: transactions.map((e) => Text(e.title)).toList(),
+            children: transactions
+                .map((e) => Card(
+                      child: Row(
+                        children: [
+                          Container(
+                            child: Text(e.amount.toString()),
+                          ),
+                          Column(
+                            children: [
+                              Text(e.title),
+                              Text(e.date.toString())
+                            ],
+                          )
+                        ],
+                      ),
+                    ))
+                .toList(),
           )
         ],
       ),
