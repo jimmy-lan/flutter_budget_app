@@ -42,8 +42,7 @@ class TransactionList extends StatelessWidget {
                     Container(
                       child: Text(
                         e.title,
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.bodyText1,
                       ),
                       margin: EdgeInsets.only(bottom: 3),
                     ),
