@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_budget_app/widgets/transaction_list.dart';
-import 'package:flutter_budget_app/widgets/user_transaction.dart';
+
+import 'widgets/user_transaction.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,22 +21,21 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Budget App")),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Card(
-            child: Text("Chart"),
-            elevation: 5,
+        appBar: AppBar(title: Text("Budget App")),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Card(
+                child: Text("Chart"),
+                elevation: 5,
+              ),
+              UserTransaction(),
+            ],
           ),
-          UserTransaction(),
-        ],
-      ),
-    );
+        ));
   }
 }
