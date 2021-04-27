@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'widgets/user_transaction.dart';
+import './widgets/new_transaction.dart';
+import './models/transaction.dart';
+import './widgets/transaction_list.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,24 +22,65 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final _userTransactions = [
+    Transaction(
+        id: "t1", title: "New Shoes", amount: 69.99, date: DateTime.now()),
+    Transaction(
+        id: "t2", title: "Groceries", amount: 14.99, date: DateTime.now())
+  ];
+
+  void _addNewTransaction(String title, double amount) {
+    final newTx = Transaction(
+        id: DateTime.now().toString(),
+        title: title,
+        amount: amount,
+        date: DateTime.now());
+
+    setState(() {
+      _userTransactions.add(newTx);
+    });
+  }
+
+  void _promptNewTransaction(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return NewTransaction(onNewTransaction: _addNewTransaction);
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Budget App"), actions: [
-          IconButton(icon: Icon(Icons.add), onPressed: () {})
-        ],),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Card(
-              child: Text("Chart"),
-              elevation: 5,
-            ),
-            UserTransaction(),
-          ],
-        ),
-      floatingActionButton: FloatingActionButton(child: Icon(Icons.add), onPressed: () {}),
+      appBar: AppBar(
+        title: Text("Budget App"),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () => _promptNewTransaction(context))
+        ],
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Card(
+            child: Text("Chart"),
+            elevation: 5,
+          ),
+          TransactionList(
+            transactions: _userTransactions,
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () => _promptNewTransaction(context)),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
