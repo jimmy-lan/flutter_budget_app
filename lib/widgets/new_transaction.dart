@@ -23,6 +23,9 @@ class _NewTransactionState extends State<NewTransaction> {
 
     widget.onNewTransaction(titleController.text,
         double.parse(amountController.text));
+
+    // Close modal
+    Navigator.of(context).pop();
   }
 
   @override
