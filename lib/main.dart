@@ -25,17 +25,15 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text("Budget App")),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Card(
-                child: Text("Chart"),
-                elevation: 5,
-              ),
-              UserTransaction(),
-            ],
-          ),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Card(
+              child: Text("Chart"),
+              elevation: 5,
+            ),
+            UserTransaction(),
+          ],
         ));
   }
 }
