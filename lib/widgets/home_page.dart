@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Chart(data: []),
+          Chart(transactionData: _userTransactions),
           TransactionList(
             transactions: _userTransactions,
           ),

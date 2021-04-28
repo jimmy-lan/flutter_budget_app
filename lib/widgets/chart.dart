@@ -1,21 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_budget_app/models/spending_by_day.dart';
 import 'package:charts_flutter/flutter.dart';
+import 'package:intl/intl.dart';
+
+import '../models/transaction.dart';
+import '../models/spending_by_date.dart';
 
 class Chart extends StatelessWidget {
-  final List<SpendingByDay> data;
+  final List<Transaction> transactionData;
 
-  Chart({@required this.data});
+  Chart({@required this.transactionData});
+
+  List<Transaction> get _recentTransactions {
+    return transactionData.where((tx) {
+      return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
+  List<SpendingByDate> _calculateChartData(BuildContext context) {
+    return List.generate(7, (index) {
+      final weekDay = DateTime.now().subtract(Duration(days: 6 - index));
+      var totalSum = 0.0;
+
+      for (var i = 0; i < _recentTransactions.length; i++) {
+        if (_recentTransactions[i].date.day == weekDay.day &&
+            _recentTransactions[i].date.month == weekDay.month &&
+            _recentTransactions[i].date.year == weekDay.year) {
+          totalSum += _recentTransactions[i].amount;
+        }
+      }
+
+      return SpendingByDate(
+          date: DateFormat.MMMd().format(weekDay),
+          amount: totalSum,
+          color: Theme.of(context).primaryColor);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<Series<SpendingByDay, String>> series = [
+    List<Series<SpendingByDate, String>> series = [
       Series(
           id: "spending",
-          data: data,
-          domainFn: (SpendingByDay series, _) => series.day,
-          measureFn: (SpendingByDay series, _) => series.amount,
-          colorFn: (SpendingByDay series, _) => series.color),
+          data: _calculateChartData(context),
+          domainFn: (SpendingByDate series, _) => series.date,
+          measureFn: (SpendingByDate series, _) => series.amount,
+          colorFn: (SpendingByDate series, _) => series.color),
     ];
 
     return Container(
@@ -24,8 +53,13 @@ class Chart extends StatelessWidget {
       child: Card(
           child: Column(
         children: [
-          Text("Daily Spending Statistics", style: Theme.of(context).textTheme.bodyText1,),
-          SizedBox(height: 10,),
+          Text(
+            "Daily Spending Statistics",
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+          SizedBox(
+            height: 10,
+          ),
           Expanded(
             child: BarChart(
               series,
