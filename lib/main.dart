@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_budget_app/widgets/chart.dart';
 
 import './widgets/new_transaction.dart';
 import './models/transaction.dart';
@@ -83,10 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Card(
-            child: Text("Chart"),
-            elevation: 5,
-          ),
+          Chart(data: []),
           TransactionList(
             transactions: _userTransactions,
           ),
