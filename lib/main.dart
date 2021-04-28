@@ -17,10 +17,19 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Quicksand',
           textTheme: TextTheme(
               bodyText1: TextStyle(
-            fontFamily: 'Quicksand',
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          )),
+                fontFamily: 'Quicksand',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+              bodyText2: TextStyle(
+                fontFamily: 'Quicksand',
+                fontSize: 15,
+                fontWeight: FontWeight.normal
+              ),
+              headline3: TextStyle(
+                  fontFamily: 'Quicksand',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
           appBarTheme: AppBarTheme(
               textTheme: ThemeData.light().textTheme.copyWith(
                   headline6: TextStyle(
