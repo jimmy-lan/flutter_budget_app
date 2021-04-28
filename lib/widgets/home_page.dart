@@ -13,7 +13,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
     Transaction(
-        id: "t1", title: "New Shoes", amount: 69.99, date: DateTime.now()),
+        id: "t1", title: "New Shoes", amount: 69.99, date: DateTime.now().subtract(Duration(days: 1))),
     Transaction(
         id: "t2", title: "Groceries", amount: 14.99, date: DateTime.now())
   ];
@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Budget App",
+          "My Budget",
         ),
         actions: [
           IconButton(
