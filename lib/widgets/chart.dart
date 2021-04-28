@@ -49,25 +49,29 @@ class Chart extends StatelessWidget {
 
     return Container(
       height: 280,
-      padding: EdgeInsets.all(20),
       child: Card(
+        child: Container(
+          padding: EdgeInsets.all(10),
           child: Column(
-        children: [
-          Text(
-            "Daily Spending Statistics",
-            style: Theme.of(context).textTheme.bodyText1,
+            children: [
+              Text(
+                "Daily Spending Statistics",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Expanded(
+                child: BarChart(
+                  series,
+                  animate: true,
+                ),
+              )
+            ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: BarChart(
-              series,
-              animate: true,
-            ),
-          )
-        ],
-      )),
+        ),
+        elevation: 5,
+      ),
     );
   }
 }
