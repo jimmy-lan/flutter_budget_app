@@ -19,12 +19,12 @@ class _NewTransactionState extends State<NewTransaction> {
     final title = titleController.text;
     final amount = double.parse(amountController.text);
 
-    if (title.isEmpty || amount <= 0) {
+    if (title.isEmpty || amount <= 0 || _selectedDate == null) {
       return;
     }
 
-    widget.onNewTransaction(
-        titleController.text, double.parse(amountController.text));
+    widget.onNewTransaction(titleController.text,
+        double.parse(amountController.text), _selectedDate);
 
     // Close modal
     Navigator.of(context).pop();
@@ -82,8 +82,7 @@ class _NewTransactionState extends State<NewTransaction> {
                 ),
                 TextButton(
                     onPressed: _presentDatePicker,
-                    child: Text(
-                        "Choose Date",
+                    child: Text("Choose Date",
                         style: TextStyle(fontWeight: FontWeight.bold))),
               ],
             ),
