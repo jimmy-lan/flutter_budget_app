@@ -53,6 +53,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text(
         "My Budget",
@@ -63,43 +65,49 @@ class _MyHomePageState extends State<MyHomePage> {
             onPressed: () => _promptNewTransaction(context))
       ],
     );
+    final txList = TransactionList(
+      transactions: _userTransactions,
+      onDeleteTransaction: _deleteTransaction,
+    );
+    final chartContainer = Container(
+        height: (MediaQuery.of(context).size.height -
+                appBar.preferredSize.height -
+                MediaQuery.of(context).padding.top) *
+            0.7,
+        child: Chart(transactionData: _userTransactions));
 
     return Scaffold(
       appBar: appBar,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              OutlinedButton(
-                  onPressed: () {
-                    setState(() {
-                      currentDisplay =
-                          currentDisplay == HomePageDisplay.showChart
-                              ? HomePageDisplay.showList
-                              : HomePageDisplay.showChart;
-                    });
-                  },
-                  child: Text(currentDisplay == HomePageDisplay.showChart
-                      ? "Show List"
-                      : "Show Chart")),
-              SizedBox(
-                width: 6,
-              )
-            ],
-          ),
-          currentDisplay == HomePageDisplay.showChart
-              ? Container(
-                  height: (MediaQuery.of(context).size.height -
-                          appBar.preferredSize.height -
-                          MediaQuery.of(context).padding.top) *
-                      0.7,
-                  child: Chart(transactionData: _userTransactions))
-              : TransactionList(
-                  transactions: _userTransactions,
-                  onDeleteTransaction: _deleteTransaction,
-                ),
+          if (isLandscape)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                OutlinedButton(
+                    onPressed: () {
+                      setState(() {
+                        currentDisplay =
+                            currentDisplay == HomePageDisplay.showChart
+                                ? HomePageDisplay.showList
+                                : HomePageDisplay.showChart;
+                      });
+                    },
+                    child: Text(currentDisplay == HomePageDisplay.showChart
+                        ? "Show List"
+                        : "Show Chart")),
+                SizedBox(
+                  width: 6,
+                )
+              ],
+            ),
+          if (!isLandscape) chartContainer,
+          if (!isLandscape) txList,
+          if (isLandscape)
+            currentDisplay == HomePageDisplay.showChart
+                ? chartContainer
+                : txList
         ],
       ),
       floatingActionButton: FloatingActionButton(
