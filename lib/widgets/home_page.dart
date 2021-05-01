@@ -69,12 +69,13 @@ class _MyHomePageState extends State<MyHomePage> {
       transactions: _userTransactions,
       onDeleteTransaction: _deleteTransaction,
     );
+    final availableHeight = (MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top);
+    final chartHeight =
+        isLandscape ? availableHeight * 0.7 : availableHeight * 0.3;
     final chartContainer = Container(
-        height: (MediaQuery.of(context).size.height -
-                appBar.preferredSize.height -
-                MediaQuery.of(context).padding.top) *
-            0.7,
-        child: Chart(transactionData: _userTransactions));
+        height: chartHeight, child: Chart(transactionData: _userTransactions));
 
     return Scaffold(
       appBar: appBar,
