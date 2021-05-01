@@ -53,8 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
     final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+        mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text(
         "My Budget",
@@ -69,9 +70,9 @@ class _MyHomePageState extends State<MyHomePage> {
       transactions: _userTransactions,
       onDeleteTransaction: _deleteTransaction,
     );
-    final availableHeight = (MediaQuery.of(context).size.height -
+    final availableHeight = (mediaQuery.size.height -
         appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top);
+        mediaQuery.padding.top);
     final chartHeight =
         isLandscape ? availableHeight * 0.7 : availableHeight * 0.3;
     final chartContainer = Container(
