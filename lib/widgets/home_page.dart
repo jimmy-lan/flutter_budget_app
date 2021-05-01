@@ -13,7 +13,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
     Transaction(
-        id: "t1", title: "New Shoes", amount: 69.99, date: DateTime.now().subtract(Duration(days: 1))),
+        id: "t1",
+        title: "New Shoes",
+        amount: 69.99,
+        date: DateTime.now().subtract(Duration(days: 1))),
     Transaction(
         id: "t2", title: "Groceries", amount: 14.99, date: DateTime.now())
   ];
@@ -46,21 +49,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "My Budget",
-        ),
-        actions: [
-          IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () => _promptNewTransaction(context))
-        ],
+    final appBar = AppBar(
+      title: Text(
+        "My Budget",
       ),
+      actions: [
+        IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => _promptNewTransaction(context))
+      ],
+    );
+
+    return Scaffold(
+      appBar: appBar,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Chart(transactionData: _userTransactions),
+          Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.3,
+              child: Chart(transactionData: _userTransactions)),
           TransactionList(
             transactions: _userTransactions,
             onDeleteTransaction: _deleteTransaction,

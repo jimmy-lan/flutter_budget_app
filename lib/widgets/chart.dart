@@ -47,31 +47,28 @@ class Chart extends StatelessWidget {
           colorFn: (SpendingByDate series, _) => series.color),
     ];
 
-    return Container(
-      height: 280,
-      child: Card(
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Text(
-                "Daily Spending Statistics",
-                style: Theme.of(context).textTheme.bodyText1,
+    return Card(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Text(
+              "Daily Spending Statistics",
+              style: Theme.of(context).textTheme.bodyText1,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: BarChart(
+                series,
+                animate: true,
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                child: BarChart(
-                  series,
-                  animate: true,
-                ),
-              )
-            ],
-          ),
+            )
+          ],
         ),
-        elevation: 5,
       ),
+      elevation: 5,
     );
   }
 }
